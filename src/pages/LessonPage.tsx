@@ -40,41 +40,52 @@ export const LessonPage = () => {
   const [module, setModule] = useState<any>(null);
   const [lesson, setLesson] = useState<any>(null);
   const [videoCompleted, setVideoCompleted] = useState(false);
+  // Local set of completed lessons for UI persistence
+  const [completedSet, setCompletedSet] = useState<Set<string>>(new Set());
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
 
+  // Load lesson data and reset completion when the IDs change
   useEffect(() => {
     if (courses.length > 0 && courseId && moduleId && lessonId) {
       const foundCourse = courses.find(c => c.id === courseId);
-      if (foundCourse) {
-        setCourse(foundCourse);
-        
-        const foundModule = foundCourse.modules.find((m: any) => m.id === moduleId);
-        if (foundModule) {
-          setModule(foundModule);
-          
-          const foundLesson = foundModule.lessons.find((l: any) => l.id === lessonId);
-          if (foundLesson) {
-            setLesson(foundLesson);
-            updateLastAccessed(courseId, moduleId, lessonId);
-            
-            // Reset video completed state when changing lessons
-            setVideoCompleted(false);
-            
-            // Check if this lesson has already been completed previously
-            if (userProgress?.completedLessons[lessonId]) {
-              setVideoCompleted(true); // Mark as completed if it was already completed before
-            }
-          }
-        }
+      if (!foundCourse) return;
+      setCourse(foundCourse);
+      const foundModule = foundCourse.modules.find((m: any) => m.id === moduleId);
+      if (!foundModule) return;
+      setModule(foundModule);
+      const foundLesson = foundModule.lessons.find((l: any) => l.id === lessonId);
+      if (!foundLesson) return;
+      setLesson(foundLesson);
+      updateLastAccessed(courseId, moduleId, lessonId);
+      // Reset video completion state on lesson change
+      setVideoCompleted(false);
+    }
+  }, [courses, courseId, moduleId, lessonId, updateLastAccessed]);
+  
+  // Sync persisted completions into local completedSet (merge without losing recent ones)
+  useEffect(() => {
+    if (userProgress?.completedLessons) {
+      setCompletedSet(prev => {
+        const unionSet = new Set(prev);
+        Object.entries(userProgress.completedLessons).forEach(([id, done]) => {
+          if (done) unionSet.add(id);
+        });
+        return unionSet;
+      });
+      // Show bottom indicator for current lesson if persisted as done
+      if (lessonId && userProgress.completedLessons[lessonId]) {
+        setVideoCompleted(true);
       }
     }
-  }, [courses, courseId, moduleId, lessonId, updateLastAccessed, userProgress]);
+  }, [userProgress, lessonId]);
 
   const handleLessonComplete = () => {
     if (courseId && lessonId) {
       console.log(`Marking lesson ${lessonId} as completed...`);
       setVideoCompleted(true); // Track completion state locally immediately
+      // Add to local completed set so checkbox persists
+      if (lessonId) setCompletedSet(prev => new Set(prev).add(lessonId));
       
       markLessonCompleted(courseId, lessonId)
         .then(() => {
@@ -185,14 +196,12 @@ export const LessonPage = () => {
     setSidebarOpen(false);
   };
 
+  // Determines if a lesson is completed: completedSet or just completed video
   const isLessonCompleted = (checkLessonId: string) => {
-    // Check if the current lesson being viewed is completed locally
-    const isCurrentLessonCompleted = checkLessonId === lessonId && videoCompleted;
-    
-    // Or if it's already marked as completed in Firebase
-    const isCompletedInFirebase = userProgress?.completedLessons[checkLessonId] || false;
-    
-    return isCurrentLessonCompleted || isCompletedInFirebase;
+    if (checkLessonId === lessonId) {
+      return videoCompleted || completedSet.has(checkLessonId);
+    }
+    return completedSet.has(checkLessonId);
   };
 
   if (loading || !course || !module || !lesson) {
@@ -232,10 +241,10 @@ export const LessonPage = () => {
                 title={lesson.title}
               />
               
-              {videoCompleted && (
-                <Box sx={{ mt: 2, display: 'flex', alignItems: 'center', color: 'success.main' }}>
-                  <CheckCircleIcon sx={{ mr: 1 }} />
-                  <Typography variant="body2">
+              {(videoCompleted || completedSet.has(lessonId!)) && (
+                <Box sx={{ mt: 2, display: 'flex', alignItems: 'center', color: 'success.main', transition: 'none' }}>
+                  <CheckCircleIcon sx={{ mr: 1, animation: 'none', transition: 'none' }} />
+                  <Typography variant="body2" sx={{ transition: 'none' }}>
                     Lesson complete! Your progress has been saved.
                   </Typography>
                 </Box>

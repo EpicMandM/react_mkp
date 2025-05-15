@@ -56,14 +56,14 @@ export const initializeData = async (): Promise<void> => {
             {
               id: 'lesson-1-1-1',
               title: 'Introduction to HTML',
-              videoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
+              videoUrl: 'https://www.youtube.com/watch?v=it1rTvBcfRg',
               description: 'Learn the basics of HTML, including tags, elements, and document structure. This lesson covers the fundamental building blocks of web pages.',
               duration: 15
             },
             {
               id: 'lesson-1-1-2',
               title: 'HTML Forms',
-              videoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
+              videoUrl: 'https://www.youtube.com/watch?v=VLeERv_dR6Q',
               description: 'Learn how to create interactive forms in HTML to collect user input. This lesson covers form elements, validation, and submission.',
               duration: 18
             }
@@ -104,14 +104,14 @@ export const initializeData = async (): Promise<void> => {
             {
               id: 'lesson-1-2-1',
               title: 'CSS Selectors',
-              videoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
+            videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
               description: 'Learn how to target HTML elements with CSS selectors. This lesson covers different types of selectors and their specificity.',
               duration: 14
             },
             {
               id: 'lesson-1-2-2',
               title: 'CSS Box Model',
-              videoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
+            videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
               description: 'Understand the CSS Box Model including margin, border, padding, and content. This lesson is essential for layout management in web design.',
               duration: 12
             }
@@ -160,14 +160,14 @@ export const initializeData = async (): Promise<void> => {
             {
               id: 'lesson-2-1-1',
               title: 'Introduction to React',
-              videoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
+            videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
               description: 'Learn the core concepts of React, including components, JSX, and the virtual DOM. This lesson provides a solid foundation for React development.',
               duration: 20
             },
             {
               id: 'lesson-2-1-2',
               title: 'State and Props',
-              videoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
+            videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
               description: 'Understand how to manage data in React components using state and props. This lesson covers data flow and component communication patterns.',
               duration: 22
             }
@@ -208,14 +208,14 @@ export const initializeData = async (): Promise<void> => {
             {
               id: 'lesson-2-2-1',
               title: 'useState and useEffect',
-              videoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
+            videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
               description: 'Learn about the two most commonly used React hooks: useState for state management and useEffect for side effects. This lesson covers practical use cases.',
               duration: 19
             },
             {
               id: 'lesson-2-2-2',
               title: 'Custom Hooks',
-              videoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
+            videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
               description: 'Learn how to create reusable logic with custom hooks. This lesson shows how to abstract complex functionality into shareable hooks.',
               duration: 16
             }
@@ -264,14 +264,14 @@ export const initializeData = async (): Promise<void> => {
             {
               id: 'lesson-3-1-1',
               title: 'Arrow Functions and Template Literals',
-              videoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
+              videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
               description: 'Learn ES6 arrow functions and template literals, which make JavaScript code more concise and readable. This lesson covers syntax and practical examples.',
               duration: 18
             },
             {
               id: 'lesson-3-1-2',
               title: 'Destructuring and Spread Operators',
-              videoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
+              videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
               description: 'Master destructuring assignments and spread operators, powerful ES6 features for working with arrays and objects. This lesson includes common use cases.',
               duration: 15
             }
@@ -312,14 +312,14 @@ export const initializeData = async (): Promise<void> => {
             {
               id: 'lesson-3-2-1',
               title: 'Promises',
-              videoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
+              videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
               description: 'Learn about Promises, a cleaner way to handle asynchronous operations in JavaScript. This lesson covers creating, chaining, and error handling with promises.',
               duration: 22
             },
             {
               id: 'lesson-3-2-2',
               title: 'Async/Await',
-              videoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
+              videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
               description: 'Master async/await syntax, which makes asynchronous code look and behave more like synchronous code. This lesson includes error handling and practical patterns.',
               duration: 20
             }

@@ -18,14 +18,14 @@ const courses = [
           {
             id: 'lesson-1-1-1',
             title: 'Introduction to HTML',
-            videoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
+            videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
             description: 'Learn the basics of HTML, including tags, elements, and document structure.',
             duration: 15
           },
           {
             id: 'lesson-1-1-2',
             title: 'HTML Forms',
-            videoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
+            videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
             description: 'Learn how to create interactive forms in HTML to collect user input.',
             duration: 18
           }
@@ -66,14 +66,14 @@ const courses = [
           {
             id: 'lesson-1-2-1',
             title: 'CSS Selectors',
-            videoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
+            videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
             description: 'Learn how to target HTML elements with CSS selectors.',
             duration: 14
           },
           {
             id: 'lesson-1-2-2',
             title: 'CSS Box Model',
-            videoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
+            videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
             description: 'Understand the CSS Box Model including margin, border, padding, and content.',
             duration: 12
           }
@@ -122,7 +122,7 @@ const courses = [
           {
             id: 'lesson-2-1-1',
             title: 'Introduction to React',
-            videoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
+            videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
             description: 'Learn the core concepts of React, including components, JSX, and the virtual DOM.',
             duration: 20
           }
@@ -160,7 +160,7 @@ const courses = [
           {
             id: 'lesson-3-1-1',
             title: 'Arrow Functions and Template Literals',
-            videoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
+            videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
             description: 'Learn ES6 arrow functions and template literals.',
             duration: 18
           }

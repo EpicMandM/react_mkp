@@ -1,5 +1,6 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Box, Button, Typography, LinearProgress } from '@mui/material';
+import ReactPlayer from 'react-player';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
@@ -13,7 +14,8 @@ interface VideoPlayerProps {
 }
 
 export const VideoPlayer = ({ videoUrl, onComplete, title }: VideoPlayerProps) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const playerRef = useRef<ReactPlayer>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -21,85 +23,44 @@ export const VideoPlayer = ({ videoUrl, onComplete, title }: VideoPlayerProps) =
   const [currentTime, setCurrentTime] = useState(0);
   const [videoEnded, setVideoEnded] = useState(false);
 
-  useEffect(() => {
-    const video = videoRef.current;
-    
-    if (!video) return;
-    
-    const handleTimeUpdate = () => {
-      if (video.duration) {
-        setProgress((video.currentTime / video.duration) * 100);
-        setCurrentTime(video.currentTime);
-      }
-    };
-    
-    const handleLoadedMetadata = () => {
-      setDuration(video.duration);
-    };
-    
-    const handleEnded = () => {
-      setIsPlaying(false);
-      setVideoEnded(true);
-      if (onComplete) {
-        console.log("Video ended, triggering onComplete callback");
-        setTimeout(() => {
-          onComplete(); // Delay the callback slightly to ensure UI updates properly
-        }, 500);
-      }
-    };
-    
-    video.addEventListener('timeupdate', handleTimeUpdate);
-    video.addEventListener('loadedmetadata', handleLoadedMetadata);
-    video.addEventListener('ended', handleEnded);
-    
-    return () => {
-      video.removeEventListener('timeupdate', handleTimeUpdate);
-      video.removeEventListener('loadedmetadata', handleLoadedMetadata);
-      video.removeEventListener('ended', handleEnded);
-    };
-  }, [onComplete]);
+  // Handlers for ReactPlayer callbacks
+  const handleProgress = (state: { played: number; playedSeconds: number }) => {
+    setProgress(state.played * 100);
+    setCurrentTime(state.playedSeconds);
+  };
+
+  const handleDuration = (dur: number) => {
+    setDuration(dur);
+  };
+
+  const handleEnded = () => {
+    setIsPlaying(false);
+    setVideoEnded(true);
+    if (onComplete) {
+      console.log('Video ended, triggering onComplete callback');
+      setTimeout(() => onComplete(), 500);
+    }
+  };
 
   const togglePlay = () => {
-    const video = videoRef.current;
-    
-    if (!video) return;
-    
-    if (isPlaying) {
-      video.pause();
-    } else {
-      video.play();
-    }
-    
-    setIsPlaying(!isPlaying);
+    setIsPlaying(prev => !prev);
   };
 
   const toggleMute = () => {
-    const video = videoRef.current;
-    
-    if (!video) return;
-    
-    video.muted = !video.muted;
-    setIsMuted(!isMuted);
+    setIsMuted(prev => !prev);
   };
 
   const handleFullscreen = () => {
-    const video = videoRef.current;
-    
-    if (!video) return;
-    
-    if (video.requestFullscreen) {
-      video.requestFullscreen();
+    if (wrapperRef.current && wrapperRef.current.requestFullscreen) {
+      wrapperRef.current.requestFullscreen();
     }
   };
 
   const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    const video = videoRef.current;
-    
-    if (!video) return;
-    
     const rect = e.currentTarget.getBoundingClientRect();
     const clickPosition = (e.clientX - rect.left) / rect.width;
-    video.currentTime = clickPosition * video.duration;
+    const seconds = clickPosition * duration;
+    playerRef.current?.seekTo(seconds, 'seconds');
   };
 
   const formatTime = (time: number) => {
@@ -114,11 +75,20 @@ export const VideoPlayer = ({ videoUrl, onComplete, title }: VideoPlayerProps) =
         {title}
       </Typography>
       
-      <Box sx={{ position: 'relative' }}>
-        <video
-          ref={videoRef}
-          src={videoUrl}
-          style={{ width: '100%', height: 'auto', display: 'block' }}
+      {/* Responsive video container with 16:9 aspect ratio */}
+      <Box sx={{ position: 'relative', width: '100%', pt: '56.25%' }} ref={wrapperRef}>
+        <ReactPlayer
+          ref={playerRef}
+          url={videoUrl}
+          playing={isPlaying}
+          muted={isMuted}
+          controls={false}
+          onProgress={handleProgress}
+          onDuration={handleDuration}
+          onEnded={handleEnded}
+          width="100%"
+          height="100%"
+          style={{ position: 'absolute', top: 0, left: 0 }}
         />
         
         <Box 
